@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/core/constants/app_strings.dart';
-import 'package:food_app/core/dependency_injection/injection_container.dart';
+import 'package:food_app/core/routing/routes.dart';
 import 'package:food_app/core/themes/app_color.dart';
-import 'package:food_app/features/home/data/repositories/home_repository.dart';
 import 'package:food_app/features/home/presentation/view_model/category_meals_cubit.dart';
 import 'package:food_app/features/home/presentation/view_model/category_meals_state.dart';
-import 'package:food_app/features/home/presentation/views/meal_details_view.dart';
 import 'package:food_app/features/home/presentation/views/widgets/home_status.dart';
 import 'package:food_app/features/home/presentation/views/widgets/meal_card.dart';
 
@@ -22,13 +20,9 @@ class CategoryMealsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CategoryMealsCubit(sl<HomeRepository>())
-        ..getMealsByCategory(categoryName),
-      child: _CategoryMealsContent(
-        categoryName: categoryName,
-        categoryDescription: categoryDescription,
-      ),
+    return _CategoryMealsContent(
+      categoryName: categoryName,
+      categoryDescription: categoryDescription,
     );
   }
 }
@@ -166,13 +160,10 @@ class _CategoryMealsContentState extends State<_CategoryMealsContent> {
                         return MealCard(
                           meal: meal,
                           onTap: () {
-                            Navigator.push(
+                            Navigator.pushNamed(
                               context,
-                              MaterialPageRoute(
-                                builder: (_) => MealDetailsView(
-                                  mealId: meal.id,
-                                ),
-                              ),
+                              Routes.mealDetails,
+                              arguments: meal.id,
                             );
                           },
                         );

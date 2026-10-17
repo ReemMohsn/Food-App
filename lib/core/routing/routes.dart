@@ -7,8 +7,6 @@ class Routes {
   static const String home = '/home';
   static const String categoryMeals = '/category-meals';
   static const String mealDetails = '/meal-details';
-  static const String favorites = '/favorites';
-  static const String profile = '/profile';
 }
 
 

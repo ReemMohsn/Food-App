@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/core/constants/app_strings.dart';
+import 'package:food_app/core/routing/routes.dart';
 import 'package:food_app/core/themes/app_color.dart';
 import 'package:food_app/features/home/presentation/view_model/home_cubit.dart';
 import 'package:food_app/features/home/presentation/view_model/home_state.dart';
-import 'package:food_app/features/home/presentation/views/category_meals_view.dart';
 import 'package:food_app/features/home/presentation/views/widgets/category_card.dart';
 import 'package:food_app/features/home/presentation/views/widgets/home_header.dart';
 import 'package:food_app/features/home/presentation/views/widgets/home_status.dart';
@@ -39,7 +39,6 @@ class _HomeViewState extends State<HomeView> {
     final cubit = context.read<HomeCubit>();
 
     return Scaffold(
-      backgroundColor: AppColor.background,
       body: RefreshIndicator(
         color: AppColor.primary,
         onRefresh: cubit.getCategories,
@@ -112,34 +111,34 @@ class _HomeViewState extends State<HomeView> {
                   }
 
                   return SliverPadding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     sliver: SliverGrid(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 14,
-                        mainAxisSpacing: 14,
-                        childAspectRatio: 0.85,
-                      ),
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final category = state.categories[index];
-                          return CategoryCard(
-                            category: category,
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => CategoryMealsView(
-                                    categoryName: category.name,
-                                    categoryDescription: category.description,
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        childCount: state.categories.length,
-                      ),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 14,
+                            mainAxisSpacing: 14,
+                            childAspectRatio: 0.85,
+                          ),
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        final category = state.categories[index];
+                        return CategoryCard(
+                          category: category,
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              Routes.categoryMeals,
+                              arguments: {
+                                'name': category.name,
+                                'description': category.description,
+                              },
+                            );
+                          },
+                        );
+                      }, childCount: state.categories.length),
                     ),
                   );
                 }
@@ -147,9 +146,7 @@ class _HomeViewState extends State<HomeView> {
                 return const SliverToBoxAdapter(child: SizedBox.shrink());
               },
             ),
-            const SliverToBoxAdapter(
-              child: SizedBox(height: 24),
-            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 24)),
           ],
         ),
       ),

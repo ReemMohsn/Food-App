@@ -1,31 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/core/constants/app_strings.dart';
-import 'package:food_app/core/dependency_injection/injection_container.dart';
 import 'package:food_app/core/themes/app_color.dart';
 import 'package:food_app/features/favorites/presentation/view_model/favorites_cubit.dart';
 import 'package:food_app/features/favorites/presentation/view_model/favorites_state.dart';
 import 'package:food_app/features/home/data/models/meal_detail_model.dart';
 import 'package:food_app/features/home/data/models/meal_summary_model.dart';
-import 'package:food_app/features/home/data/repositories/home_repository.dart';
 import 'package:food_app/features/home/presentation/view_model/meal_details_cubit.dart';
 import 'package:food_app/features/home/presentation/view_model/meal_details_state.dart';
 import 'package:food_app/features/home/presentation/views/widgets/home_status.dart';
 
 class MealDetailsView extends StatelessWidget {
-  const MealDetailsView({
-    super.key,
-    required this.mealId,
-  });
-
-  final String mealId;
+  const MealDetailsView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => MealDetailsCubit(sl<HomeRepository>())..getMealDetails(mealId),
-      child: const _MealDetailsContent(),
-    );
+    return const _MealDetailsContent();
   }
 }
 
@@ -56,7 +46,10 @@ class _MealDetailsContent extends StatelessWidget {
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 leading: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColor.textPrimary),
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new_rounded,
+                    color: AppColor.textPrimary,
+                  ),
                   onPressed: () => Navigator.pop(context),
                 ),
               ),
@@ -96,7 +89,8 @@ class _MealDetailsContent extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: BlocBuilder<FavoritesCubit, FavoritesState>(
                         builder: (context, favState) {
-                          final isFav = favState is FavoritesSuccess &&
+                          final isFav =
+                              favState is FavoritesSuccess &&
                               favState.isFavorite(meal.id);
                           return CircleAvatar(
                             backgroundColor: Colors.white,
@@ -112,12 +106,12 @@ class _MealDetailsContent extends StatelessWidget {
                               ),
                               onPressed: () {
                                 context.read<FavoritesCubit>().toggleFavorite(
-                                      MealSummaryModel(
-                                        id: meal.id,
-                                        name: meal.name,
-                                        thumb: meal.thumb,
-                                      ),
-                                    );
+                                  MealSummaryModel(
+                                    id: meal.id,
+                                    name: meal.name,
+                                    thumb: meal.thumb,
+                                  ),
+                                );
                               },
                             ),
                           );
@@ -132,14 +126,15 @@ class _MealDetailsContent extends StatelessWidget {
                         Image.network(
                           meal.thumb,
                           fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) => Container(
-                            color: AppColor.secondary,
-                            child: const Icon(
-                              Icons.restaurant,
-                              size: 64,
-                              color: AppColor.primary,
-                            ),
-                          ),
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(
+                                color: AppColor.secondary,
+                                child: const Icon(
+                                  Icons.restaurant,
+                                  size: 64,
+                                  color: AppColor.primary,
+                                ),
+                              ),
                         ),
                         const DecoratedBox(
                           decoration: BoxDecoration(
@@ -162,7 +157,9 @@ class _MealDetailsContent extends StatelessWidget {
                   child: Container(
                     decoration: const BoxDecoration(
                       color: AppColor.background,
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(24),
+                      ),
                     ),
                     padding: const EdgeInsets.all(20),
                     child: Column(
@@ -317,19 +314,14 @@ class _MealDetailsContent extends StatelessWidget {
     return Card(
       elevation: 1,
       color: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: ListView.separated(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         padding: const EdgeInsets.all(12),
         itemCount: ingredients.length,
-        separatorBuilder: (context, index) => const Divider(
-          height: 12,
-          thickness: 0.5,
-          color: AppColor.divider,
-        ),
+        separatorBuilder: (context, index) =>
+            const Divider(height: 12, thickness: 0.5, color: AppColor.divider),
         itemBuilder: (context, index) {
           final item = ingredients[index];
           return Padding(
@@ -384,9 +376,7 @@ class _MealDetailsContent extends StatelessWidget {
     return Card(
       elevation: 1,
       color: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Text(
