@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/core/themes/app_color.dart';
+import 'package:food_app/core/routing/routes.dart';
 import 'package:food_app/features/favorites/presentation/view_model/favorites_cubit.dart';
 import 'package:food_app/features/favorites/presentation/view_model/favorites_state.dart';
 import 'package:food_app/features/favorites/presentation/views/widgets/favorite_meal_card.dart';
-import 'package:food_app/features/home/presentation/views/meal_details_view.dart';
 import 'package:food_app/features/main_home/presentation/view_model/main_home_cubit.dart';
 
 class FavoritesView extends StatelessWidget {
@@ -118,11 +118,10 @@ class FavoritesView extends StatelessWidget {
               return FavoriteMealCard(
                 meal: meal,
                 onTap: () {
-                  Navigator.push(
+                  Navigator.pushNamed(
                     context,
-                    MaterialPageRoute(
-                      builder: (_) => MealDetailsView(mealId: meal.id),
-                    ),
+                    Routes.mealDetails,
+                    arguments: meal.id,
                   );
                 },
                 onRemoveFavorite: () {

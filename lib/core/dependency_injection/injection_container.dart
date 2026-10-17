@@ -8,6 +8,8 @@ import 'package:food_app/features/favorites/presentation/view_model/favorites_cu
 import 'package:food_app/features/home/data/data_sources/home_remote_data_source.dart';
 import 'package:food_app/features/home/data/repositories/home_repository.dart';
 import 'package:food_app/features/home/presentation/view_model/home_cubit.dart';
+import 'package:food_app/features/home/presentation/view_model/category_meals_cubit.dart';
+import 'package:food_app/features/home/presentation/view_model/meal_details_cubit.dart';
 import 'package:food_app/features/profile/data/data_sources/profile_remote_data_source.dart';
 import 'package:food_app/features/profile/data/repositories/profile_repository.dart';
 import 'package:food_app/features/profile/presentation/view_model/profile_cubit.dart';
@@ -47,6 +49,12 @@ Future<void> initDependencies() async {
   );
   sl.registerFactory<HomeCubit>(
     () => HomeCubit(sl<HomeRepository>()),
+  );
+  sl.registerFactory<CategoryMealsCubit>(
+    () => CategoryMealsCubit(sl<HomeRepository>()),
+  );
+  sl.registerFactory<MealDetailsCubit>(
+    () => MealDetailsCubit(sl<HomeRepository>()),
   );
 
   // Favorites Feature
