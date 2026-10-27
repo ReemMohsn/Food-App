@@ -49,6 +49,9 @@
 		<true/>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
+		<!-- Supabase handles auth deep links through its app-links integration. -->
+		<key>FlutterDeepLinkingEnabled</key>
+		<false/>
 
 		<!-- Deep Link: Supabase auth callbacks (password reset, OAuth) -->
 		<key>CFBundleURLTypes</key>
@@ -58,7 +61,7 @@
 				<string>Editor</string>
 				<key>CFBundleURLSchemes</key>
 				<array>
-					<string>com.example.food_app</string>
+					<string>com.example.foodapp</string>
 				</array>
 			</dict>
 		</array>

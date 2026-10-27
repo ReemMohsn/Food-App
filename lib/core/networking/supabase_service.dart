@@ -8,7 +8,7 @@ class SupabaseService {
   /// The custom URL scheme registered in AndroidManifest.xml & Info.plist.
   /// Supabase will append this as the redirect after auth actions
   /// (password reset, OAuth sign-in, etc.) so the OS opens our app.
-  static const String redirectUrl = 'com.example.food_app://login-callback';
+  static const String redirectUrl = 'com.example.foodapp://login-callback';
 
   static Future<void> initil() async {
     await Supabase.initialize(url: _supabaseUrl, publishableKey: _supabaseKey);
